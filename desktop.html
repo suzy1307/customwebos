@@ -6,18 +6,21 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Architects+Daughter&display=swap" rel="stylesheet">
-  
+
   <!-- Desktop CSS -->
   <link rel="stylesheet" href="css/desktop.css">
 </head>
 <body>
   <!-- Video Background -->
-  <video id="bg-video" autoplay muted loop playsinline></video>
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="assets/videos/batman.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
   <!-- Taskbar -->
   <div class="taskbar">
     <div class="left">
-      <span id="user-name">Welcome</span>
+      <span id="user-name">🧑‍💻👩🏼‍💻👩🏼‍💻 Welcome, bestie!</span>
     </div>
     <div class="right">
       <button id="themeToggle">Switch to Spider-Man</button>
@@ -27,10 +30,45 @@
 
   <!-- Desktop Icons -->
   <div class="desktop-icons" id="icons-container">
-    <!-- Icons will be added in next step -->
+    <!-- 1. Bat-Terminal -->
+    <div class="icon" onclick="window.open('apps/terminal.html', '_blank')">
+      🦇<br>Bat-Terminal
+    </div>
+
+    <!-- 2. CommitLog - Unlocks after stage 1 -->
+    <div class="icon" id="commitLogIcon" onclick="handleCommitLogClick()">
+      📜<br>CommitLog
+    </div>
+
+    <!-- 3. Library -->
+    <div class="icon">
+      📁<br>Library
+    </div>
+
+    <!-- 4. DevProfile -->
+    <div class="icon">
+      💡<br>DevProfile
+    </div>
+
+    <!-- 5. GiftVault -->
+    <div class="icon">
+      🎁<br>GiftVault
+    </div>
   </div>
 
-  <!-- JS -->
+  <!-- Desktop JS -->
   <script src="js/desktop.js"></script>
+
+  <!-- Treasure Hunt Logic for CommitLog -->
+  <script>
+    function handleCommitLogClick() {
+      const isUnlocked = localStorage.getItem('clue1Unlocked');
+      if (isUnlocked === 'true') {
+        alert("✅ Clue 2:\nRun `git log --oneline -3` in the terminal.\n\nHint: The next clue is hiding in your 📁 Library.");
+      } else {
+        alert("🔒 This log is locked.\nSolve the first terminal clue to access.");
+      }
+    }
+  </script>
 </body>
 </html>
