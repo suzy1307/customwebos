@@ -19,56 +19,89 @@
 
   <!-- Taskbar -->
   <div class="taskbar">
-    <div class="left">
-      <span id="user-name">🧑‍💻👩🏼‍💻👩🏼‍💻 Welcome, bestie!</span>
-    </div>
-    <div class="right">
-      <button id="themeToggle">Switch to Spider-Man</button>
-      <span id="clock"></span>
+    <div class="center-message">
+      <div class="birthday-track">
+        <span class="birthday-text">🏍️ Happiest Birthday Bunny 💛 &nbsp;&nbsp;</span>
+        <span class="birthday-text">🏍️ Happiest Birthday Bunny 💛 &nbsp;&nbsp;</span>
+        <span class="birthday-text">🏍️ Happiest Birthday Bunny 💛 &nbsp;&nbsp;</span>
+      </div>
     </div>
   </div>
 
   <!-- Desktop Icons -->
   <div class="desktop-icons" id="icons-container">
-    <!-- 1. Bat-Terminal -->
-    <div class="icon" onclick="window.open('apps/terminal.html', '_blank')">
+    <div class="icon" id="terminalIcon">
       🦇<br>Bat-Terminal
     </div>
-
-    <!-- 2. CommitLog - Unlocks after stage 1 -->
-    <div class="icon" id="commitLogIcon" onclick="handleCommitLogClick()">
+    <div class="icon" id="commitLogIcon">
       📜<br>CommitLog
     </div>
-
-    <!-- 3. Library -->
-    <div class="icon">
+    <div class="icon" id="libraryIcon">
       📁<br>Library
     </div>
-
-    <!-- 4. DevProfile -->
-    <div class="icon">
+    <div class="icon" id="devProfileIcon">
       💡<br>DevProfile
     </div>
-
-    <!-- 5. GiftVault -->
-    <div class="icon">
+    <div class="icon" id="giftIcon">
       🎁<br>GiftVault
     </div>
   </div>
 
-  <!-- Desktop JS -->
+  <!-- JS -->
   <script src="js/desktop.js"></script>
 
-  <!-- Treasure Hunt Logic for CommitLog -->
+  <!-- Unlock Logic -->
   <script>
-    function handleCommitLogClick() {
-      const isUnlocked = localStorage.getItem('clue1Unlocked');
-      if (isUnlocked === 'true') {
-        alert("✅ Clue 2:\nRun `git log --oneline -3` in the terminal.\n\nHint: The next clue is hiding in your 📁 Library.");
+    window.onload = function () {
+      const clue1 = localStorage.getItem("clue1Unlocked") === "true";
+      const clue2 = localStorage.getItem("clue2Unlocked") === "true";
+      const treasure = localStorage.getItem("treasureUnlocked") === "true";
+
+      const terminal = document.getElementById("terminalIcon");
+      const commitLog = document.getElementById("commitLogIcon");
+      const library = document.getElementById("libraryIcon");
+      const devProfile = document.getElementById("devProfileIcon");
+      const gift = document.getElementById("giftIcon");
+
+      // Terminal - Always open
+      terminal.onclick = () => window.open("apps/terminal.html", "_blank");
+
+      // CommitLog - Unlock after Clue 1
+      if (clue1) {
+        commitLog.style.opacity = "1";
+        commitLog.style.pointerEvents = "auto";
+        commitLog.onclick = () => window.open("apps/commitlog.html", "_blank");
       } else {
-        alert("🔒 This log is locked.\nSolve the first terminal clue to access.");
+        commitLog.style.opacity = "0.3";
+        commitLog.style.pointerEvents = "none";
+        commitLog.onclick = () => alert("🔒 This log is locked.\nSolve the first terminal clue to access 💛");
       }
-    }
+
+      // Library - Unlock after Clue 2
+      if (clue2) {
+        library.style.opacity = "1";
+        library.style.pointerEvents = "auto";
+        library.onclick = () => alert("📚 Clue 3 awaits inside the DevProfile! 🧠");
+      } else {
+        library.style.opacity = "0.3";
+        library.style.pointerEvents = "none";
+        library.onclick = () => alert("🔒 Library is locked.\nAccept the CommitLog contract to proceed 💛");
+      }
+
+      // DevProfile - Placeholder
+      devProfile.onclick = () => alert("👷‍♀️ Work in progress... coming soon!");
+
+      // GiftVault - Final Treasure
+      if (treasure) {
+        gift.style.opacity = "1";
+        gift.style.pointerEvents = "auto";
+        gift.onclick = () => alert("🎁 Treasure Unlocked! Open the GiftVault 💛");
+      } else {
+        gift.style.opacity = "0.3";
+        gift.style.pointerEvents = "none";
+        gift.onclick = () => alert("🔒 Solve all clues to unlock the final treasure 💛");
+      }
+    };
   </script>
 </body>
 </html>

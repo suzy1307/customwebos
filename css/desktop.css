@@ -49,87 +49,48 @@
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 10;
     border-top: 2px solid var(--accent-color);
     box-shadow: 0 -2px 15px var(--accent-color);
   }
   
-  /* Taskbar sections */
-  .taskbar .left,
-  .taskbar .right {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-  
-  /* Welcome message */
-  #user-name {
-    font-family: var(--font-hand);
-    font-size: 1.1rem;
-    color: var(--accent-color);
-    display: flex;
-    align-items: center;
-  }
-  #user-name::before {
-    content: "🧑‍🚀 ";
-  }
-  
-  /* Theme switch button */
+  /* Remove old taskbar elements */
+  #user-name,
+  #clock,
   #themeToggle {
-    font-family: var(--font-hand);
-    font-size: 0.9rem;
-    color: #000;
-    background-color: var(--accent-color);
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    cursor: pointer;
-    box-shadow: 0 0 10px var(--accent-color);
-    transition: all 0.3s ease;
-  }
-  #themeToggle:hover {
-    background-color: #000;
-    color: var(--accent-color);
-    border: 1px solid var(--accent-color);
+    display: none !important;
   }
   
-  /* Fancy animated clock */
-  #clock {
-    font-family: var(--font-tech);
-    font-size: 1rem;
-    color: #000;
-    background: linear-gradient(145deg, var(--accent-color), #fff);
-    padding: 10px 20px;
-    border-radius: 9px;
-    border: 2px solid var(--accent-color);
-    box-shadow:
-      0 0 10px var(--accent-color),
-      0 0 30px var(--accent-color) inset;
-    text-shadow:
-      0 0 2px #000,
-      0 0 4px var(--accent-color);
-    animation: glowClock 2s infinite alternate ease-in-out;
-    letter-spacing: 1px;
+  /* Centered animated birthday message */
+  .center-message {
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+    height: 60px;
+  }
+  
+  .birthday-track {
+    display: flex;
     white-space: nowrap;
-    min-width: 1px;
-    text-align: center;
+    animation: bikeRide 30s linear infinite;
   }
   
-  /* Clock breathing animation */
-  @keyframes glowClock {
+  .birthday-text {
+    font-family: var(--font-hand);
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    white-space: nowrap;
+    padding-right: 80px;
+  }
+  
+  @keyframes bikeRide {
     0% {
-      box-shadow:
-        0 0 10px var(--accent-color),
-        0 0 20px var(--accent-color) inset;
-      transform: scale(1);
+      transform: translateX(100%);
     }
     100% {
-      box-shadow:
-        0 0 20px var(--accent-color),
-        0 0 40px var(--accent-color) inset;
-      transform: scale(1.03);
+      transform: translateX(-100%);
     }
   }
   
@@ -155,12 +116,23 @@
     cursor: pointer;
     font-family: var(--font-hand);
     color: var(--accent-color);
-    transition: transform 0.2s ease, background-color 0.3s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
     backdrop-filter: blur(4px);
   }
+  
   .icon:hover {
     transform: scale(1.1);
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 12px var(--accent-color);
+  }
+  
+  /* Locked state for icons */
+  .icon.locked {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: grayscale(90%) blur(0.5px);
+    cursor: default;
+    transform: none !important;
+    box-shadow: none !important;
   }
   

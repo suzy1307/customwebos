@@ -27,7 +27,7 @@ const stages = [
   {
     prompt: "🗝️ Final Lock:\nTo reveal your final treasure, enter the command:",
     answer: "~/bat_cave/secret.sh",
-    success: "🎉 𝙃𝘼𝙋𝙋𝙔 𝘽𝙄𝙍𝙏𝙃𝘿𝘼𝙔 𝘽𝙀𝙎𝙏𝙄𝙀 💖\nFrom your Bat-Friend 💻🦇"
+    success: "🎉 𝙃𝘼𝙋𝙋𝙔 𝘽𝙄𝙍𝙏𝙃𝘿𝘼𝙔 𝘽𝙀𝙎𝙏𝙄𝙀 💛\nFrom your Bat-Friend 💻🦇"
   }
 ];
 
@@ -37,35 +37,53 @@ function printLine(text) {
 }
 
 function handleCommand(e) {
-  if (e.key === 'Enter') {
-    const cmd = input.value.trim();
-    printLine(`\n> ${cmd}`);
-    input.value = '';
+  if (e.key !== 'Enter') return;
 
-    const current = stages[stage];
-    if (cmd === current.answer) {
-      printLine(current.success);
+  const cmd = input.value.trim();
+  printLine(`\n> ${cmd}`);
+  input.value = '';
 
-      // Unlock after final stage
-      if (stage === stages.length - 1) {
-        localStorage.setItem('treasureUnlocked', 'true');
-
-        setTimeout(() => {
-          printLine("\n🔓 The Gift icon has been unlocked on your desktop!");
-          setTimeout(() => {
-            const terminalApp = document.getElementById('terminal-app');
-            if (terminalApp) terminalApp.style.display = 'none'; // auto-close
-          }, 2000);
-        }, 1500);
-      }
-
-      stage++;
-      if (stage < stages.length) {
-        setTimeout(() => printLine(`\n${stages[stage].prompt}`), 1200);
-      }
+  // Allow exit only after final clue is solved
+  if (cmd === "exit") {
+    if (stage === stages.length) {
+      printLine("🔐 Returning to the Desktop...");
+      localStorage.setItem('commitLogReady', 'true');  // ✅ Set here only after full completion
+      setTimeout(() => {
+        window.location.href = "../desktop.html";
+      }, 1200);
     } else {
-      printLine("❌ That's not it. Try again, Detective.");
+      printLine("⛔ You can't exit yet! Complete all clues to unlock the way back.");
     }
+    return;
+  }
+
+  const current = stages[stage];
+  if (cmd === current.answer) {
+    printLine(current.success);
+
+    // Unlock CommitLog after first clue
+    if (stage === 0) {
+      localStorage.setItem('clue1Unlocked', 'true');
+      printLine("🔓 You’ve unlocked the 📜 CommitLog on the desktop 💛");
+    }
+
+    // Final stage logic
+    if (stage === stages.length - 1) {
+      localStorage.setItem('treasureUnlocked', 'true');
+      setTimeout(() => {
+        printLine("\n🔓 The 🎁 GiftVault icon has been unlocked on your desktop!");
+        printLine("🕹️ Type `exit` to return to your desktop and continue your quest 💛");
+      }, 1500);
+    }
+
+    stage++;
+    localStorage.setItem('terminalStage', stage); // Save progress
+
+    if (stage < stages.length) {
+      setTimeout(() => printLine(`\n${stages[stage].prompt}`), 1200);
+    }
+  } else {
+    printLine("❌ That's not it. Try again, Detective.");
   }
 }
 
