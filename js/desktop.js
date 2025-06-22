@@ -63,13 +63,13 @@ window.onload = () => {
         icons.library.classList.remove('locked');
         icons.library.style.opacity = "1";
         icons.library.style.pointerEvents = "auto";
-        icons.library.onclick = () => alert("📚 Clue 3 awaits inside the DevProfile! 🧠");
+        icons.library.onclick = () => window.open("apps/library.html", "_blank");
       } else {
         icons.library.classList.add('locked');
         icons.library.style.opacity = "0.3";
         icons.library.style.pointerEvents = "none";
         icons.library.onclick = () =>
-          alert("🔒 Library is locked.\nAccept the CommitLog contract to proceed 💛");
+          alert("🔒 Library is locked.\nClue 3 awaits inside the second CommitLog profile! 🧠");
       }
     }
   

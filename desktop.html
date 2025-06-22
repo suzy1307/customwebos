@@ -47,61 +47,7 @@
     </div>
   </div>
 
-  <!-- JS -->
-  <script src="js/desktop.js"></script>
-
-  <!-- Unlock Logic -->
-  <script>
-    window.onload = function () {
-      const clue1 = localStorage.getItem("clue1Unlocked") === "true";
-      const clue2 = localStorage.getItem("clue2Unlocked") === "true";
-      const treasure = localStorage.getItem("treasureUnlocked") === "true";
-
-      const terminal = document.getElementById("terminalIcon");
-      const commitLog = document.getElementById("commitLogIcon");
-      const library = document.getElementById("libraryIcon");
-      const devProfile = document.getElementById("devProfileIcon");
-      const gift = document.getElementById("giftIcon");
-
-      // Terminal - Always open
-      terminal.onclick = () => window.open("apps/terminal.html", "_blank");
-
-      // CommitLog - Unlock after Clue 1
-      if (clue1) {
-        commitLog.style.opacity = "1";
-        commitLog.style.pointerEvents = "auto";
-        commitLog.onclick = () => window.open("apps/commitlog.html", "_blank");
-      } else {
-        commitLog.style.opacity = "0.3";
-        commitLog.style.pointerEvents = "none";
-        commitLog.onclick = () => alert("🔒 This log is locked.\nSolve the first terminal clue to access 💛");
-      }
-
-      // Library - Unlock after Clue 2
-      if (clue2) {
-        library.style.opacity = "1";
-        library.style.pointerEvents = "auto";
-        library.onclick = () => alert("📚 Clue 3 awaits inside the DevProfile! 🧠");
-      } else {
-        library.style.opacity = "0.3";
-        library.style.pointerEvents = "none";
-        library.onclick = () => alert("🔒 Library is locked.\nAccept the CommitLog contract to proceed 💛");
-      }
-
-      // DevProfile - Placeholder
-      devProfile.onclick = () => alert("👷‍♀️ Work in progress... coming soon!");
-
-      // GiftVault - Final Treasure
-      if (treasure) {
-        gift.style.opacity = "1";
-        gift.style.pointerEvents = "auto";
-        gift.onclick = () => alert("🎁 Treasure Unlocked! Open the GiftVault 💛");
-      } else {
-        gift.style.opacity = "0.3";
-        gift.style.pointerEvents = "none";
-        gift.onclick = () => alert("🔒 Solve all clues to unlock the final treasure 💛");
-      }
-    };
-  </script>
+  <!-- JS (with version to avoid cache) -->
+  <script src="js/desktop.js?v=2"></script>
 </body>
 </html>
