@@ -1,104 +1,69 @@
 body {
   background-color: #111;
-  color: white;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Architects Daughter', cursive;
+  color: #fff;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
   overflow: hidden;
 }
 
-.profile-container {
-  position: relative;
+.container {
   text-align: center;
-}
-
-#profile-pic {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: 4px solid yellow;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-#profile-pic:hover {
-  transform: scale(1.05);
-}
-
-#certificate {
-  position: absolute;
-  top: 220px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #222;
+  max-width: 600px;
   padding: 20px;
-  border: 3px dashed yellow;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px dashed gold;
   border-radius: 20px;
-  font-size: 1.2rem;
-  z-index: 10;
-  width: 300px;
-  text-align: center;
-  display: none;
-  animation: popin 0.5s ease-out;
+  box-shadow: 0 0 25px gold;
 }
 
-#certificate.show {
-  display: block;
+.bighead-img {
+  width: 150px;
+  margin-bottom: 20px;
+  animation: float 2s ease-in-out infinite;
 }
 
-.cert-text {
-  margin-top: 10px;
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.certificate h1 {
   color: gold;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
-.highlight {
-  color: hotpink;
-  font-weight: bold;
+.certificate h2 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #ffccff;
 }
 
-.big-head {
-  width: 80px;
-  height: 80px;
-  background: url('../assets/images/bighead.png') no-repeat center/contain;
-  margin: 0 auto 10px;
+.certificate h3 {
+  font-size: 20px;
+  color: #7fffd4;
+  margin: 10px 0;
 }
 
-#confetti-wrapper {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
+.small {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #ccc;
 }
 
 .confetti {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  top: 0;
-  animation: fall linear;
-  opacity: 0.8;
+  font-size: 28px;
+  margin-top: 10px;
+  animation: confettiBounce 1s infinite;
 }
 
-@keyframes fall {
-  to {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes popin {
-  from {
-    transform: scale(0.7) translateX(-50%);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateX(-50%);
-    opacity: 1;
-  }
+@keyframes confettiBounce {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.2); }
 }
