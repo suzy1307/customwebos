@@ -17,13 +17,13 @@
     h1 {
       color: #ffcc00;
       text-align: center;
-      margin: 20px 0;
+      margin: 20px 0 10px;
     }
 
     .carousel-wrapper {
       position: relative;
       width: 100%;
-      height: calc(100% - 80px);
+      height: calc(100% - 140px); /* Leave space for button below */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -41,12 +41,12 @@
       margin: 0 10px;
       transition: all 0.5s ease-in-out;
       filter: blur(4px);
-      transform: scale(0.9);
+      transform: scale(0.85);
       opacity: 0.5;
     }
 
     .slide img {
-      height: 70vh;
+      height: 60vh; /* Reduced height */
       border-radius: 16px;
       border: 3px solid #ffcc00;
       object-fit: cover;
@@ -54,7 +54,7 @@
     }
 
     .slide.active {
-      transform: scale(1.2);
+      transform: scale(1.1);
       filter: none;
       opacity: 1;
       z-index: 2;
@@ -84,13 +84,37 @@
       border-radius: 50% 0 0 50%;
     }
 
+    .exit-wrapper {
+      position: relative;
+      margin-top: -20px; /* Bring it closer to carousel */
+      text-align: center;
+      z-index: 10;
+    }
+
+    .exit-wrapper button {
+      background: #ffcc00;
+      border: none;
+      color: #111;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-family: 'Architects Daughter', cursive;
+      box-shadow: 0 0 6px #ffcc00;
+      cursor: pointer;
+    }
+
     @media (max-width: 768px) {
       .slide img {
-        height: 50vh;
+        height: 45vh;
       }
 
       .slide.active {
-        transform: scale(1.1);
+        transform: scale(1);
+      }
+
+      .nav-btn {
+        width: 40px;
+        height: 80px;
       }
     }
   </style>
@@ -106,6 +130,10 @@
     </div>
 
     <button class="nav-btn right" id="nextBtn">&#10095;</button>
+  </div>
+
+  <div class="exit-wrapper">
+    <button onclick="exitGallery()">🚪 Exit to Desktop</button>
   </div>
 
   <script>
@@ -155,6 +183,10 @@
       index = (index + 1) % images.length;
       renderSlides();
       setTimeout(autoSlide, 5000);
+    }
+
+    function exitGallery() {
+      window.location.href = "../desktop.html"; // Replace with your actual desktop.html path
     }
 
     window.onload = () => {
