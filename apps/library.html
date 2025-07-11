@@ -5,89 +5,161 @@
   <title>Library - BestieOS</title>
   <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet" />
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       background-color: #111;
       font-family: 'Architects Daughter', cursive;
-      color: #fff;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
+      overflow: hidden;
     }
 
     h1 {
       color: #ffcc00;
-      margin-bottom: 30px;
+      text-align: center;
+      margin: 20px 0;
     }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .gallery img,
-    .gallery video {
+    .carousel-wrapper {
+      position: relative;
       width: 100%;
-      border-radius: 12px;
-      border: 2px solid #ffcc00;
-      object-fit: cover;
+      height: calc(100% - 80px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    video {
-      max-height: 240px;
+    .carousel-track {
+      display: flex;
+      align-items: center;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .slide {
+      flex: 0 0 auto;
+      margin: 0 10px;
+      transition: all 0.5s ease-in-out;
+      filter: blur(4px);
+      transform: scale(0.9);
+      opacity: 0.5;
+    }
+
+    .slide img {
+      height: 70vh;
+      border-radius: 16px;
+      border: 3px solid #ffcc00;
+      object-fit: cover;
+      box-shadow: 0 0 6px #ffcc00;
+    }
+
+    .slide.active {
+      transform: scale(1.2);
+      filter: none;
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffcc00;
+      border: none;
+      font-size: 30px;
+      color: #111;
+      width: 50px;
+      height: 100px;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .nav-btn.left {
+      left: 0;
+      border-radius: 0 50% 50% 0;
+    }
+
+    .nav-btn.right {
+      right: 0;
+      border-radius: 50% 0 0 50%;
+    }
+
+    @media (max-width: 768px) {
+      .slide img {
+        height: 50vh;
+      }
+
+      .slide.active {
+        transform: scale(1.1);
+      }
     }
   </style>
 </head>
 <body>
   <h1>💛 Our Shared Memories</h1>
-  <div class="gallery" id="gallery"></div>
+
+  <div class="carousel-wrapper">
+    <button class="nav-btn left" id="prevBtn">&#10094;</button>
+
+    <div class="carousel-track" id="carouselTrack">
+      <!-- Images will be dynamically added -->
+    </div>
+
+    <button class="nav-btn right" id="nextBtn">&#10095;</button>
+  </div>
 
   <script>
-    window.onload = function () {
-      const gallery = document.getElementById("gallery");
-      const supportedExtensions = ['jpg', 'jpeg', 'png', 'mp4'];
+    const images = [
+      "../assets/media/image1.png",
+      "../assets/media/image2.png",
+      "../assets/media/image3.png",
+      "../assets/media/image4.png",
+      "../assets/media/image5.png"
+    ];
 
-      fetch("../assets/media/")
-        .then(response => response.text())
-        .then(text => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(text, "text/html");
-          const links = Array.from(htmlDoc.querySelectorAll("a"));
+    const track = document.getElementById("carouselTrack");
+    let index = 0;
 
-          const mediaLinks = links
-            .map(a => a.getAttribute("href"))
-            .filter(href => supportedExtensions.some(ext => href.toLowerCase().endsWith("." + ext)));
+    function renderSlides() {
+      track.innerHTML = "";
 
-          if (mediaLinks.length === 0) {
-            gallery.innerHTML = `<p style="color: white;">No media found in assets/media/ folder 😢</p>`;
-            return;
-          }
+      const total = images.length;
+      const prev = (index - 1 + total) % total;
+      const next = (index + 1) % total;
 
-          mediaLinks.forEach(link => {
-            const fullPath = `../assets/media/${link}`;
-            const ext = link.split('.').pop().toLowerCase();
+      [prev, index, next].forEach(i => {
+        const div = document.createElement("div");
+        div.className = "slide";
+        if (i === index) div.classList.add("active");
 
-            let element;
-            if (['jpg', 'jpeg', 'png'].includes(ext)) {
-              element = document.createElement("img");
-              element.src = fullPath;
-            } else if (ext === "mp4") {
-              element = document.createElement("video");
-              element.src = fullPath;
-              element.controls = true;
-            }
+        const img = document.createElement("img");
+        img.src = images[i];
+        img.alt = `Memory ${i + 1}`;
 
-            if (element) {
-              element.className = "media-item";
-              gallery.appendChild(element);
-            }
-          });
-        })
-        .catch(err => {
-          console.error("Error loading media:", err);
-          gallery.innerHTML = `<p style="color: red;">Error loading media folder!</p>`;
-        });
+        div.appendChild(img);
+        track.appendChild(div);
+      });
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      index = (index - 1 + images.length) % images.length;
+      renderSlides();
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      index = (index + 1) % images.length;
+      renderSlides();
+    });
+
+    function autoSlide() {
+      index = (index + 1) % images.length;
+      renderSlides();
+      setTimeout(autoSlide, 5000);
+    }
+
+    window.onload = () => {
+      renderSlides();
+      setTimeout(autoSlide, 5000);
     };
   </script>
 </body>
