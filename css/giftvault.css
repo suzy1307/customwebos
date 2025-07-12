@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Architects Daughter', cursive;
+  background-color: #111;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.vault-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 700px;
+  padding: 20px;
+}
+
+.scroll-box {
+  background: linear-gradient(135deg, #222, #333);
+  border: 3px solid gold;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 0 25px 6px gold;
+  text-align: center;
+  width: 100%;
+}
+
+.bouncy-text {
+  font-size: 24px;
+  color: gold;
+  animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.gift-entry {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 18px;
+  border-radius: 12px;
+  border: 2px dashed #ffcc00;
+}
+
+.gift-entry h2 {
+  color: #ffccff;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.gift-entry p {
+  color: #eee;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Exit Button */
+.exit-wrapper {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.exit-btn {
+  padding: 10px 22px;
+  font-family: 'Architects Daughter', cursive;
+  font-size: 15px;
+  background-color: gold;
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px gold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.exit-btn:hover {
+  background-color: #ffd700;
+  transform: scale(1.05);
+}

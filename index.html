@@ -7,11 +7,24 @@
 </head>
 <body>
   <div class="login-container">
-    <h1>Welcome to BatMarvel OS</h1>
+    <h1>🦇 Welcome to BatMarvel OS 🕶️</h1>
+    
     <input type="text" id="username" placeholder="Enter your superhero name" />
-    <button onclick="login()">Login</button>
+    <button onclick="login()">🚀 Login</button>
+
+    <p class="hint">💡 Hint: Your fav superhero + one special character + your name initial + birthdate  
+    <br>👉 Example: <code>Batman@1307</code></p>
   </div>
 
-  <script src="js/login.js"></script>
+  <script>
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      if (username === "Batman@1307") {
+        window.location.href = "desktop.html"; // Change this if your main page is named differently
+      } else {
+        alert("❌ Access denied! Try again, Bestie 💛");
+      }
+    }
+  </script>
 </body>
 </html>
